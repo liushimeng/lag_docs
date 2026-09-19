@@ -51,8 +51,27 @@ switch 中路由到 `ws/game_service_wealth.go`。
 | `game.error` | 操作错误 | `{code, message}`（seq 回带） |
 | `game.removed` | 终局 60s 后房间清理 | `{room_id}` |
 
-`game.event.type` 语义：`action`=某人动作回执 ｜ `move`=迁区 ｜ `settle`=月结（仅发本人明细）
-｜ `market`=周期切换 / 大幅波动 ｜ `life`=人生事件 ｜ `chat`=聊天回执 ｜ `error`=引擎拒绝。
+`game.event.type` 语义：`action`=人类 / Agent 动作回执 ｜ `move`=迁区 ｜ `settle`=月结（仅发本人明细）
+｜ `market`=周期切换 / 大幅波动 ｜ `life`=人生事件 ｜ `chat`=预留聊天回执（Wealth 公屏实际走
+`chat.message`） ｜ `error`=引擎拒绝。
+
+`action` / `move` 广播语义：
+
+- 人类 `game.wealth_action` 与 Agent 工具动作共用；除 `move_district` 成功后广播
+  `type="move"` 外，其他成功动作广播 `type="action"`。
+- 每条事件携带 `{room_id, month, seat, type, text, data?}`，全房（含观战者）可见，
+  用于交叉验证 Agent 本月确实执行过 action / move；失败动作不广播成功事件。
+- Agent 月度 `speak` 仍走 `ChatService.SendFromBot` / `WhisperFromBot`，公屏为
+  `chat.message` / 聊天协议帧，不伪装成 `game.event(type="chat")` 的强制附加帧。
+
+开局 opening hook：
+
+- `game.started` 后，后端按座位逐条调用 `ChatService.SendFromBot` 发送职业卡
+  `opening_hook`；帧类型为聊天系统的 `chat.message`（`from_role="bot"`），
+  会持久化到房间聊天历史并对玩家 + 观战者广播。
+- 每个有非空 `opening_hook` 的 bot 座位最多发送 1 条，文本按 100 字截断；
+  12 座全 Agent 房的验收目标为 **12 条**，重复触发开局流程不得重发。
+  单条发送 / 持久化失败记录 warn，不阻断 `game.started` 与月度 tick。
 
 ---
 
@@ -139,12 +158,21 @@ switch 中路由到 `ws/game_service_wealth.go`。
     consumption_by_goods: { [id: string]: number }  // P1: 本人上月八大类消费拆分（元）
   },
   bot_contexts: [{          // Agent 思维可见性：本人座位 + 观战者可见；其他玩家不可见
+    month: number,                   // 房间权威当前月（1-based）；新月 acting 开始即刷新
     seat: number,
+    last_decision_month: number,     // last_* / heart_thought 字段所属的游戏月；
+                                     // 等待 Agent 发布本月快照时可小于 month
+    updated_at: number,              // transcript 元数据最近更新时间（unix_ms）
+    active: boolean,                 // 该座位当前是否存活；false=出局/停止月度决策
     last_decision_summary: string,   // Agent 自述本月决策（≤120 字）
     last_tool_input: string,         // JSON 字符串
     last_tool_result: string,        // 人读结果
     heart_thought: string            // 内心独白（speak 的 internal_thought）
   }],
+  // bot_contexts 时效语义：month 表示“房间当前月”，last_decision_month 表示
+  // “决策摘要所属月”。月初 Agent 尚未返回时，允许 last_* 保留上月“无动作/超时/已提交”
+  // 结论；月窗强制结束时后端写入 system_timeout + submit_month 摘要，禁止长期空值。
+  // active=false 时后端清空工具细节并标记“已出局”，旧月 Agent 回写不得覆盖该状态。
   ledger_recent: [{ month: number, from: string, to: string,
                     amount_cny: number, category: string, note: string }],  // 最近 50 条：本人相关 + 公共
   events_recent: [{ month: number, type: string, text: string }],          // 最近 100 条
