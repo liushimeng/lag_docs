@@ -59,7 +59,43 @@
 | 4 | 居民之声代号的城区名由 city 包独立同步 wealth `DistrictDefs` 8 中文名 | 避免 city→wealth 反向 import |
 | 5 | 显式 `model_key` 座位昵称保持 `AI·<model_key>` 旧形态 | 存量兼容；仅池驱动座位升级为 `AI·<职业卡人名>` |
 
-## 5. 后续观察项（不在本轮范围）
+## 5. 运行时 E2E 冒烟（真实服务、真实 LLM、2026-09-21 13:00）
+
+> 单测全绿 ≠ 链路可用。本轮在 `https://127.0.0.1:39001` 用测试账号（`test_01`，
+> 验证码 SVG `<text>` 字符直读，与真实用户同路径）完成全链路冒烟。
+
+| 步骤 | 结果 |
+|---|---|
+| 登录 | ✅ captcha → login → JWT |
+| `GET /api/llm/models` | ✅ 13 个模型全部携带 `concurrency_lines`，总线路数（并发）=13 |
+| `POST /api/games/wealth/rooms`（12 空模型座位 + `resident_count=100000` + `pool=docs` + 3000ms/月） | ✅ 即时创建，`full_agent=true`，创建者自动观战 |
+| 房间详情 | ✅ `resident_count=100000`、`status=playing`、12 座位 |
+| 服务端日志 | ✅ `wealth city backdrop created, residents=100000, seed=4242, pool_lines=13`；12 条职业卡开局钩子公屏广播；`wealth game started, seats=12` |
+| goroutine 转储（SIGQUIT） | ✅ `RunLoop` select 等待下一月；`Agent.OnMonthStart → callProviderViaPool → ChatStreamAccumulate`（池模式真实流式 LLM 调用）；`VoiceScheduler.speakOne → chatViaLease → ChatStreamAccumulate`（城市之声经线路租约产出） |
+
+### 5.1 E2E 发现并修复的 P0 缺陷（§92a 复发）
+
+**现象**：单测 30 包全绿，但首个真实建房请求永久挂死（HTTP 无响应、无访问日志、CPU 0%）。
+
+**根因**：`Manager.CreateRoom` 的 DB 座位恢复路径在**持有 `m.mu` 写锁**时调用 `EnsureAgents`，
+而本轮给 `EnsureAgents` 新增了 `m.mu.RLock()`（读 `linePoolSource`）——Go RWMutex 不可重入 →
+自死锁。goroutine 转储特征：阻塞者栈为 `CreateRoom:285 → EnsureAgents(RLock)` 且全转储无其它持锁者。
+单测直接调 `EnsureAgents`，不经 `ws→service→manager→DB-hydrate` 跨层链路，故漏网。
+
+**修复**（`game/wealth/manager.go`，+100/-1）：按 §92a 既有模式拆出**不取 m.mu 的锁内变体**
+`ensureAgentsWithPool(poolSource, r)`；公开 `EnsureAgents` 先 RLock 读源再委托；CreateRoom hydrate
+路径在写锁内直读 `m.linePoolSource` 并调锁内变体（装配时序与日志零变化）。
+
+**回归测试**（`manager_bot_test.go` 新增 2 条，已做 A/B 验证——回退修复后测试 3.00s 稳定超时失败）：
+1. `TestManager_EnsureAgentsLockedVariant_ReentrantUnderWriteLock`：持写锁现场直接钉死重入性质；
+2. `TestManager_CreateRoom_HydratePath_EnsureAgents_NoDeadlock`：非 nil registry + seatHydrator
+   复现生产全链路（旧测试因 `registry==nil` 在 RLock 前短路而未覆盖）。
+
+**同类锁点全量排查**：`SetLinePoolSource`/`WarmCityCalibration`/`r.mu` 系列/`startCityLocked`/
+`resizeAgentSemLocked`/`launchCityVoices`/`emitCityVoiceEvent`/`CitySnapshotView` 均确认锁序
+`m.mu → r.mu` 单向、无反向路径、`LinePool()` 为无锁原子读——无其它重入缺陷。
+
+## 6. 后续观察项（不在本轮范围）
 
 - 狼人杀是否切换线路池并发模型（01 §6 D5）。
 - 房间选项（month_ms/pool/seed/resident_count）统一持久化机制。
