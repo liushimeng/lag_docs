@@ -32,6 +32,9 @@
 | 16 | [`09-全Agent模式/虚拟城市-全Agent模式设计与实现方案-v1.md`](09-全Agent模式/虚拟城市-全Agent模式设计与实现方案-v1.md) | 全 Agent 模式：后端强制拒绝人类加入 + 前端观战适配 + 自动开局 | backend-dev、frontend-dev、integration-tester |
 | 17 | [`10-P1保险系统/虚拟城市-P1-商业保险与风险转移引擎-v1.md`](10-P1保险系统/虚拟城市-P1-商业保险与风险转移引擎-v1.md) | P1 第四期：四险种保单 / 月结保费与断缴宽限 / 医疗·重疾·意外·身故理赔 / `insurer` Ledger 实体激活 / CPI 重定价 / Agent 3 新工具 / 错误码 35037–35041 | backend-dev、frontend-dev |
 | 18 | [`02-架构设计/虚拟城市-P0经济平衡修复与蒙特卡洛验收方案-v1.md`](02-架构设计/虚拟城市-P0经济平衡修复与蒙特卡洛验收方案-v1.md) | P0 Balance v2：初始现金 / 基础租房 / 失业保险 / 工资-成本曲线 / 破产三阶段重组 / FI 引导 / 1,000 局蒙特卡洛门槛 | backend-dev、integration-tester |
+| 19 | [`12-CityHuman重构/虚拟城市-CityHuman-Agent合并与感知系统设计-v1.md`](12-CityHuman重构/虚拟城市-CityHuman-Agent合并与感知系统设计-v1.md) | **P0** 五个 City AgentClass 合并为唯一 `LsmAgentGame-City-Human`（城市居民，无玩家 Agent）/ 感官空间模型（见·听·闻·移动·说话，真实世界尺度）/ GameContext 扩展 / ToolRunner 新接口 / 错误码 35100–35103 | backend-dev、frontend-dev |
+| 20 | [`12-CityHuman重构/虚拟城市-界面文案与建房流程重构设计-v1.md`](12-CityHuman重构/虚拟城市-界面文案与建房流程重构设计-v1.md) | **P0** 三语术语替换表（玩家→居民 / 对局→模拟）/ 建房弹窗改「创建城市」/ 大厅与主界面观察者化 | frontend-dev |
+| 21 | [`12-CityHuman重构/虚拟城市-CityHuman重构实施清单-v1.md`](12-CityHuman重构/虚拟城市-CityHuman重构实施清单-v1.md) | **P0** 按文件的后端/前端改动清单 + 验收门禁 + E2E 冒烟与回滚预案 | backend-dev、frontend-dev、integration-tester |
 
 **配套事实来源**（本目录不重复、只引用）：
 
