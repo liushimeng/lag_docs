@@ -40,6 +40,11 @@
 | 24 | [`17-CityHuman全民驱动/02-架构设计-居民驱动层与LLM线路池-v1.md`](17-CityHuman全民驱动/02-架构设计-居民驱动层与LLM线路池-v1.md) | **17 批次** ResidentDriver：线程池 + 底层 LLM 线路池（并发=Σ线路数）；每居民 persona/Context/通用工具（set_intent+speak）；意图消费 | backend-dev |
 | 25 | [`17-CityHuman全民驱动/03-架构设计-职业卡精选层退役与档案唯一源-v1.md`](17-CityHuman全民驱动/03-架构设计-职业卡精选层退役与档案唯一源-v1.md) | **17 批次** 删除精选 14 卡层（curated.go/ProfessionAPI/路线由）；档案唯一源=玩家职业设计 10 万卡；SyntheticCards 兜底；建房 API 收口（agent_seats 忽略、深度层固定 12） | backend-dev |
 | 26 | [`17-CityHuman全民驱动/04-实施清单与验收-v1.md`](17-CityHuman全民驱动/04-实施清单与验收-v1.md) | **17 批次** 按文件改动清单（B1–B17 / F1–F9）+ 门禁 + E2E 建城冒烟 + 回滚预案 | backend-dev、frontend-dev、integration-tester |
+| 27 | [`18-3D城市PBR材质与真实城市冲刺/01-产品设计-城市真实感冲刺与模型补全-v1.md`](18-3D城市PBR材质与真实城市冲刺/01-产品设计-城市真实感冲刺与模型补全-v1.md) | **18 批次** 城市真实感冲刺：10 条可感知目标 + PBR/建筑构造/人物车辆/市政补全/UI 收口 五阶段规格 | frontend-dev、game-designer |
+| 28 | [`18-3D城市PBR材质与真实城市冲刺/02-架构设计-PBR材质管线与建筑几何深化-v1.md`](18-3D城市PBR材质与真实城市冲刺/02-架构设计-PBR材质管线与建筑几何深化-v1.md) | **18 批次** `useSharedPBR` 契约 / 14 类材质接线表 / 水面双层滚动法线 / `mergeBoxes` 与 8 个建筑构造件 / `civic/` 15 项设施几何规格 | frontend-dev |
+| 29 | [`18-3D城市PBR材质与真实城市冲刺/03-资产方案-PBR法线粗糙度与程序化材质-v1.md`](18-3D城市PBR材质与真实城市冲刺/03-资产方案-PBR法线粗糙度与程序化材质-v1.md) | **18 批次** 161 张 PBR 贴图（`3d_script/procedural_pbr_maps.py`）：颜色→高度派生算法 / 7 种合成材质 / 确定性与体积控制 / 降级链 | art-designer、frontend-dev |
+| 30 | [`18-3D城市PBR材质与真实城市冲刺/04-UI布局-控件防溢出与空间利用收口-v1.md`](18-3D城市PBR材质与真实城市冲刺/04-UI布局-控件防溢出与空间利用收口-v1.md) | **18 批次** 9 项 UI 问题清单 + 底部动作条折叠 + 6 类弹层高度统一 + 图表防溢出 + 死选择器清理 | frontend-dev |
+| 31 | [`18-3D城市PBR材质与真实城市冲刺/05-路线图与验收-v1.md`](18-3D城市PBR材质与真实城市冲刺/05-路线图与验收-v1.md) | **18 批次** X/Y/Z/AA/AB/AC 实施顺序 + 门禁 + 功能验收清单 + CDP 视觉验收流程 + 回滚预案 | frontend-dev、integration-tester |
 
 **配套事实来源**（本目录不重复、只引用）：
 
