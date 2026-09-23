@@ -35,6 +35,11 @@
 | 19 | [`12-CityHuman重构/虚拟城市-CityHuman-Agent合并与感知系统设计-v1.md`](12-CityHuman重构/虚拟城市-CityHuman-Agent合并与感知系统设计-v1.md) | **P0** 五个 City AgentClass 合并为唯一 `LsmAgentGame-City-Human`（城市居民，无玩家 Agent）/ 感官空间模型（见·听·闻·移动·说话，真实世界尺度）/ GameContext 扩展 / ToolRunner 新接口 / 错误码 35100–35103 | backend-dev、frontend-dev |
 | 20 | [`12-CityHuman重构/虚拟城市-界面文案与建房流程重构设计-v1.md`](12-CityHuman重构/虚拟城市-界面文案与建房流程重构设计-v1.md) | **P0** 三语术语替换表（玩家→居民 / 对局→模拟）/ 建房弹窗改「创建城市」/ 大厅与主界面观察者化 | frontend-dev |
 | 21 | [`12-CityHuman重构/虚拟城市-CityHuman重构实施清单-v1.md`](12-CityHuman重构/虚拟城市-CityHuman重构实施清单-v1.md) | **P0** 按文件的后端/前端改动清单 + 验收门禁 + E2E 冒烟与回滚预案 | backend-dev、frontend-dev、integration-tester |
+| 22 | [`17-CityHuman全民驱动/00-Agent功能全景整理-v1.md`](17-CityHuman全民驱动/00-Agent功能全景整理-v1.md) | **17 批次** Agent 功能实现全景索引：City-Human 唯一身份 / 深度层 46 工具 / 驱动层 / 城市之声 / 线路池 / 出站纪律 | 全体 |
+| 23 | [`17-CityHuman全民驱动/01-产品设计-创建城市与全民居民-v1.md`](17-CityHuman全民驱动/01-产品设计-创建城市与全民居民-v1.md) | **17 批次** 建房界面只剩「背景居民规模」数值控件（10~100000）；删除「焦点居民数 = 12/12」与「职业卡一览」UI；i18n 三语键表 | frontend-dev |
+| 24 | [`17-CityHuman全民驱动/02-架构设计-居民驱动层与LLM线路池-v1.md`](17-CityHuman全民驱动/02-架构设计-居民驱动层与LLM线路池-v1.md) | **17 批次** ResidentDriver：线程池 + 底层 LLM 线路池（并发=Σ线路数）；每居民 persona/Context/通用工具（set_intent+speak）；意图消费 | backend-dev |
+| 25 | [`17-CityHuman全民驱动/03-架构设计-职业卡精选层退役与档案唯一源-v1.md`](17-CityHuman全民驱动/03-架构设计-职业卡精选层退役与档案唯一源-v1.md) | **17 批次** 删除精选 14 卡层（curated.go/ProfessionAPI/路线由）；档案唯一源=玩家职业设计 10 万卡；SyntheticCards 兜底；建房 API 收口（agent_seats 忽略、深度层固定 12） | backend-dev |
+| 26 | [`17-CityHuman全民驱动/04-实施清单与验收-v1.md`](17-CityHuman全民驱动/04-实施清单与验收-v1.md) | **17 批次** 按文件改动清单（B1–B17 / F1–F9）+ 门禁 + E2E 建城冒烟 + 回滚预案 | backend-dev、frontend-dev、integration-tester |
 
 **配套事实来源**（本目录不重复、只引用）：
 
@@ -44,7 +49,7 @@
 | 三层棋盘 / 多结局理念 / 教育目标 | 《总体设计》§5–§9 |
 | 人物卡 Schema v1.1（65 字段） | [`../玩家职业设计/_框架/11-人生全息画像规约.md`](../玩家职业设计/_框架/11-人生全息画像规约.md) |
 | 平台规则（目录约束 / 行数上限 / SubAgent 分工） | [`/CLAUDE.md`](../../../CLAUDE.md) §2.1 / §4 / §13 / §24 / §26 |
-| **城市 Agent 规模化（1~10 万居民）+ LLM 线路池（并发=线路数）**（2026-09-21 起） | [`../../财商流游戏/已实现/README.md`](../../财商流游戏/已实现/README.md) |
+| **城市 Agent 规模化（1~10 万居民）+ LLM 线路池（并发=线路数）**（2026-09-21 起） | 原档已随 `lag_docs/财商流游戏/` 残留目录删除（git 取源锚点：子模块 `1a62ba44e2`/`ef7851bc78`）；现行契约以 [`17-CityHuman全民驱动/`](17-CityHuman全民驱动/) 为准 |
 
 ---
 
