@@ -102,7 +102,7 @@ Set-Cookie: lsm_auth=<base64url(nonce‖AES-256-GCM(plaintext))>; Path=/; Max-Ag
 
 ## 钱包 API（游戏金币系统）
 
-> 参见 CLAUDE.md §19。所有端点需要 JWT（`Authorization: Bearer <token>`）。
+> 参见 `docs/狼人杀-道具与经济/狼人杀13人局金币系统设计.md`。所有端点需要 JWT（`Authorization: Bearer <token>`）。
 
 ### GET `/api/wallet/balance`
 

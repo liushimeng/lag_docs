@@ -139,6 +139,6 @@ hint「模型数（N）少于座位数（M），将均匀复用」——复用�
 
 ## 6. 关联
 
-- CLAUDE.md §14.2（狼人杀 AI 玩家随机分配模型 — 后端 Fisher-Yates 兜底的原始出处）
+- `lag_docs/狼人杀-Agent与系统/狼人杀Agent设计.md` §12.1（AI 玩家模型随机分配 — 后端 Fisher-Yates 兜底的原始出处）
 - `lag_docs/虚拟城市/已实现/02-架构设计/虚拟城市-WS与HTTP协议契约-v1.md`（agent_seats 请求结构）
 - 狼人杀参考实现：`ClientWeb/src/components/werewolf/RoomCreateModal.tsx:108,179-185,528-539`

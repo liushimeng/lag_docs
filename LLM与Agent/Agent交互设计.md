@@ -3,7 +3,7 @@
 > **日期**: 2026-07-09
 > **状态**: 已落地 + 已端到端验证(2026-07-10)
 > **范围**: 狼人杀 7 人局 Agent 决策可观测性的概念、数据流、契约与渲染
-> **关联**: `docs/狼人杀-Agent与系统/狼人杀Agent设计.md`、CLAUDE.md §15(狼人杀 7 人局 Agent 驱动)
+> **关联**: `docs/狼人杀-Agent与系统/狼人杀Agent设计.md`(狼人杀 Agent 驱动)
 > **提交**: `1297f1e 重构: 狼人杀 Agent 思考 → Agent 交互(去 CoT 噪声, 改用决策可观测性)`
 
 ---
@@ -429,7 +429,7 @@ var sensitiveToolInputs = map[string]map[string]bool{
 - `ClientWeb/src/types/werewolf.ts:113-143` — `BotContextJSON` 类型
 - `docs/狼人杀-Agent与系统/狼人杀对话即思考设计.md` — 5 态状态机详细设计
 - `docs/werewolf-protocol.md` — BotTranscriptJSON 字段说明
-- CLAUDE.md §15 — 狼人杀 7 人局 Agent 驱动
+- `docs/狼人杀-Agent与系统/狼人杀Agent设计.md` — 狼人杀 Agent 驱动
 - CLAUDE.md §111-115 — 500K 队列 + 发言下限 + 阶段时钟 + 共享 ReadPointer
 
 ---

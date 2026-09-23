@@ -267,7 +267,7 @@ def _normalize_posix_cron(cron_expr: str) -> str:
 
 ## 3. 与狼人杀 Agent 多阶段任务分解的对比
 
-| 维度 | Agent Studio | 狼人杀 Agent (§15) | 差距 / 借鉴点 |
+| 维度 | Agent Studio | 狼人杀 Agent | 差距 / 借鉴点 |
 |------|--------------|---------------------|---------------|
 | 任务类型 | ReAct / Workflow 二选一 | 单一"工具派发"模型 | 狼人杀适合 ReAct,无需 DAG |
 | 工具发现 | Agent 持有 plugin 列表,LLM 自选 | `BuildTools(phase, role, seat, alive)` 阶段化工具 | **可借鉴: 阶段工具白名单** |

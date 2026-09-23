@@ -488,4 +488,4 @@ CLAUDE.md §13 没要求前端单元测试覆盖率，本期不新增。手工�
   - 慢模型（Kimi/GLM/DeepSeek 等）的情绪相关 token 浪费减少 ~90%
   - §120 公平性约束不再被 emotion_switch 滥用触发
   - 前端 emotion UI 从"裸 key"升级为"emoji + label + reason tooltip"
-- **文档同步**：`docs/狼人杀-Agent与系统/狼人杀Agent情绪模块设计.md` 重写 + `CLAUDE.md` §15/§13 教训同步 + `werewolf-protocol.md` 工具表同步。
+- **文档同步**：`docs/狼人杀-Agent与系统/狼人杀Agent情绪模块设计.md` 重写 + `CLAUDE.md` §13 教训同步 + `werewolf-protocol.md` 工具表同步。

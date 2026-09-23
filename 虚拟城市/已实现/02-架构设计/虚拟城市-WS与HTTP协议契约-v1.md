@@ -263,7 +263,7 @@ switch 中路由到 `ws/game_service_wealth.go`。
 | 端点 | 方法 | 说明 |
 |------|------|------|
 | `/api/games/wealth/rooms` | GET | 列出开放房间（复用 `ListRoomsForUser`） |
-| `/api/games/wealth/rooms` | POST | 建房。body 在 `createRoomRequest` 上**新增字段** `wealth *WealthRoomOptions`：`{month_ms?: number, pool?: "curated"\|"docs", seed?: number}`；`month_ms` clamp 3000–30000；`agent_seats` 复用狼人杀 `CreateRoomWithAgents` 流程（§14.2 model_key 去重自动生效；`MaxAgentSeats=8`） |
+| `/api/games/wealth/rooms` | POST | 建房。body 在 `createRoomRequest` 上**新增字段** `wealth *WealthRoomOptions`：`{month_ms?: number, pool?: "curated"\|"docs", seed?: number}`；`month_ms` clamp 3000–30000；`agent_seats` 复用狼人杀 `CreateRoomWithAgents` 流程（model_key 去重自动生效，见 `docs/狼人杀-Agent与系统/狼人杀Agent设计.md` §12.1；`MaxAgentSeats=8`） |
 | `/api/rooms/:id/join` | POST | 加入（复用） |
 | `/api/rooms/:id/leave` | POST | 离开（复用） |
 | `/api/rooms/:id` | GET | 详情（复用） |
