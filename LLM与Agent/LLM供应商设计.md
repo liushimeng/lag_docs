@@ -454,6 +454,20 @@ func (r *Registry) SeedFromConfig(ctx context.Context) (int, error)         // �
 
 `api_key` 仍为 `API-KEY-PLACEHOLDER` 时，`Available=false`，`Get()` 返回明确错误，**不**发往代理。
 
+### 6.4 三段式 system 提示词头（§14.3）
+
+Provider 在**序列化前**对每个请求统一注入 Anthropic 三段式 system 头（①计费元数据头 / ②Claude Agent SDK 身份声明 /
+③Claude Code 核心行为规则），后接调用方（Agent）自有块：
+
+- 代码：`ServerGo/llm/sysprompt/`（权威文本 + `EnsureHead`）；注入点
+  `llm/anthropic/anthropic.go`（`Chat`/`ChatStream`）与 `llm/openai/convert.go`（转 system message 前缀）。
+- 语义：`req.AgentClassName != ""` ⇒ `cc_is_subagent=true` 并输出 `cc_agent_name`；两段常量块带
+  `cache_control:ephemeral`，计费头不带（逐 Agent 变化）。
+- 效果：全部 Agent（含新增）零配置获得三段，Agent 侧不得再手工拼接。
+
+完整规范（文本、字段归一化、缓存/字节预算、测试与变更纪律）见
+[`AgentAnthropic系统提示词三段式规范.md`](AgentAnthropic系统提示词三段式规范.md)。
+
 ---
 
 ## 7. HTTP API

@@ -9,7 +9,7 @@
 |------|------|
 | [`架构与协议/`](架构与协议/) | 整体架构、API、WS 协议、鉴权流程、用户权限、观战者架构 |
 | [`通用功能/`](通用功能/) | 国际化、底部布局、测试账号、子代理角色、聊天分页、自动化测试、产品建议 |
-| [`LLM与Agent/`](LLM与Agent/) | LLM 供应商设计、API 优化、Agent 工具定义、Agent 交互设计、Agent 钱包 |
+| [`LLM与Agent/`](LLM与Agent/) | LLM 供应商设计、**Anthropic 三段式 system 提示词规范（CLAUDE.md §14.3）**、API 优化、Agent 工具定义、Agent 交互设计、Agent 钱包 |
 | [`注入攻击演示/`](注入攻击演示/) | 6 类 LLM 注入攻击演示文档（道具系统的事实来源） |
 | [`ProtocolBuffers/`](ProtocolBuffers/) | Protobuf 协议栈指南与模块化重构 |
 | [`Web前端设计/`](Web前端设计/) | 前端菜单重构设计 |
