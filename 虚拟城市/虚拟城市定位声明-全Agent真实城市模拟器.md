@@ -1,8 +1,13 @@
 # 虚拟城市 · 定位声明 —— 全 Agent 真实城市模拟器
 
-> **版本**：v1.0 | **发布**：2026-09-22
+> **版本**：v2.0 | **发布**：2026-09-24
 > **性质**：本文件是「虚拟城市」知识库的**定位权威声明**。所有核心设计文档、对标资料、日志报告
 > 与本声明冲突时，以本声明为准；后续新增文档必须遵循本声明的定位与术语规范。
+>
+> **v2.0 更新说明**：§5.4 取消 v1.0「技术契约不变」的冻结，正式启用 `virtual-city` 命名空间：
+> URL 前缀 `/virtual-city`、后端 `game_kind="virtual_city"`、lobby slug `lobby-virtual-city`、
+> 前端目录 `components/virtualCity/`、后端包 `game/virtual_city` + `agent/vcplayer` +
+> `agent/vctypes` + `api/virtual_city_*`。方案详见 `tmpPlan/01-虚拟城市-URL与Kind重命名方案-20260924.md`。
 
 ---
 
@@ -35,7 +40,8 @@
 | 2026-09 早期 | 项目以「财商流游戏」立项，定位为财商教育桌游 / 游戏化沙盘 |
 | 2026-09-14 | 知识库 v4.4：75,115 张全息人物卡（65 字段）就位，为全 Agent 模拟奠定档案底座 |
 | 2026-09-21 | **更名**：全库「财商流游戏」→「虚拟城市」（代码 `game_kind=wealth` 等技术契约不变）；同日城市 Agent 规模化（1~10 万居民）+ LLM 线路池方案回写旧路径，形成 `lag_docs/财商流游戏/` 残留目录 |
-| 2026-09-22 | **定位转型**（本声明）：删除残留目录；知识库整体从「游戏」定位转写为「全 Agent 真实城市模拟器」定位 |
+| 2026-09-22 | **定位转型**（v1.0 本声明）：删除残留目录；知识库整体从「游戏」定位转写为「全 Agent 真实城市模拟器」定位 |
+| 2026-09-24 | **技术契约解禁**（v2.0 §5.5）：取消 v1.0 §5.4 的"技术契约不变"冻结，正式启用 `virtual-city` 命名空间；URL / kind / lobby slug / 前端目录 / 后端包 / 类型名 / i18n key 全面统一为 `virtual-city` |
 
 > 实现层早已走向全 Agent 方向：`已实现/09-全Agent模式`（全 Agent 模式设计与实现）、
 > `已实现/11-城市扩张`（16 城区地图 / 央行货币政策 / 政府财政 / 企业产业链 / 金融市场 /
@@ -82,5 +88,30 @@
 3. **代码注释残留（后续处理）**：`ServerGo/game/wealth/city/calibration.go`、`ServerGo/agent/class_names.go`、
    `ServerGo/llm/linepool.go`、`linepool_test.go`、`ClientWeb/src/types/wealth.ts` 注释中仍有
    「财商流游戏」字样，属代码工作面（CLAUDE.md §13.1 职责线 1/2），待 backend-dev / frontend-dev 后续更新。
-4. **技术契约不变**：`game_kind=wealth`、`/wealth` 路由、`Wealth*` 标识符、数据库与协议枚举
-   维持 2026-09-21 改名方案的约定，本定位转型不触碰代码。
+4. **技术契约不变（v1.0 §5.4，已废止）**：v1.0 §5.4 条规定 `game_kind=wealth`、`/wealth` 路由、`Wealth*` 标识符、
+   数据库与协议枚举维持不变。该条款自 2026-09-24 v2.0 §5.5 起**正式废止**。
+5. **v2.0 §5.5 命名空间解禁（2026-09-24）**：本项目正式启用 `virtual-city` 命名空间，
+   取代 v1.0 §5.4 的冻结状态。具体映射：
+   - URL 前缀 `/wealth` → `/virtual-city`（前端路由 + 左侧菜单栏入口）
+   - 后端 `game_kind="wealth"` → `"virtual_city"`（含 `t_lsm_game_room.game_kind` 数据库迁移）
+   - lobby slug `"lobby-wealth"` → `"lobby-virtual-city"`
+   - 后端 HTTP group `/api/games/wealth/*` → `/api/games/virtual_city/*`
+   - 后端 WS 帧 `game.wealth_{action,start,pause,paused}` → `game.virtual_city_*`
+   - 后端 Go 包 `game/wealth/` → `game/virtual_city/`、`agent/wealthplayer/` → `agent/vcplayer/`、
+     `agent/wealthtypes/` → `agent/vctypes/`、`api/wealth_*.go` → `api/virtual_city_*.go`
+   - 后端配置 JSON key `"wealth":` → `"virtual_city":`（含 `LsmAgentGame.conf.example` 顶层段）
+   - 后端类型 `config.WealthConfig` → `config.VirtualCityConfig`、`service.WealthRoomOptions` →
+     `service.VirtualCityRoomOptions`、`*api.WealthCityAPI` → `*api.VirtualCityAPI` 等
+   - 前端目录 `components/wealth/` → `components/virtualCity/`、组件前缀 `WealthXxx` →
+     `VirtualCityXxx`、hook `useWealth` → `useVirtualCity`、store `wealth.store` →
+     `virtualCity.store`、types `types/wealth.ts` → `types/virtualCity.ts`、api `api/wealth.ts` →
+     `api/virtualCity.ts`
+   - 前端样式 `styles/wealth*.css`（6 件）→ `styles/virtualCity*.css`（保持 `globals.css` `@import` 顺序）
+   - 前端资源 `assets/images/wealth/` → `assets/images/virtualCity/`
+   - 前端 i18n key 命名空间 `wealth.*` → `virtualCity.*`（1000+ key 批量重命名）
+   - 静态规则 `static/rules/wealth.md` → `static/rules/virtual-city.md`
+   - 测试入口 `AutoTestAndDebug_Wealth.{md,sh}` → `AutoTestAndDebug_VirtualCity.{md,sh}`
+   - 子模块 `python-generate-image-tool/generate_wealth_*.py` → `generate_virtual_city_*.py`
+   - **保留不变**：`AgentClassName = "LsmAgentGame-City-Human"` UA（CLAUDE.md §24 已城市向）、
+     创建弹窗 `resident_count` 协议字段名（前后端合约稳定）、错误码数字（35010/35041 等）。
+   - 详细方案：`tmpPlan/01-虚拟城市-URL与Kind重命名方案-20260924.md`
