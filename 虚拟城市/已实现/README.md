@@ -47,6 +47,7 @@
 | 31 | [`20-城市扩张32区与经济社会深化/`](20-城市扩张32区与经济社会深化/) | **20 批次** 32 城区 120×120 地图 + InstancedMesh 性能专项 ｜ 副业竞争比价定价战（重要）｜ 市长选举启用 + 股票微观结构（中等×2）。共 4 份设计/清单文档 | backend-dev、frontend-dev、integration-tester |
 | 32 | （无文档目录，纯代码批次） | **21 批次（索引补登，2026-09-24）** `wealth` → `virtualCity` 全栈重命名：后端 kind/package/type、前端 URL/组件/i18n 命名空间、AutoTestAndDebug 入口改名 VirtualCity | backend-dev、frontend-dev |
 | 33 | [`22-3D世界升级与引擎模块化/`](22-3D世界升级与引擎模块化/) | **22 批次（2026-09-25）** 2.5D → 3D 世界收口：`src/engine3d/` 通用渲染引擎抽取（EngineCanvas/Model/textureCache/EnvBinder/quality/controls）/ 相机俯仰角 1.2→1.54 解锁 / 街景漫游 WalkControls 双视角模式；方案 `tmpPlan/虚拟城市-2.5D升级3D世界与引擎模块化方案-20260925.md` | frontend-dev |
+| 34 | [`23-房间聊天删除与3D语音气泡/`](23-房间聊天删除与3D语音气泡/) | **23 批次（2026-09-25）** 房间聊天彻底删除（前端面板 + 后端人类发言 35104 拦截）+ Agent 居民发言 3D 冒泡：座位 speak → 头顶气泡（AgentToken `<Html>`），市民之声 → 市政厅上空气泡 | backend-dev、frontend-dev |
 
 **配套事实来源**（本目录不重复、只引用）：
 
