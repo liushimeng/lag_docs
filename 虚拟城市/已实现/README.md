@@ -49,6 +49,7 @@
 | 33 | [`22-3D世界升级与引擎模块化/`](22-3D世界升级与引擎模块化/) | **22 批次（2026-09-25）** 2.5D → 3D 世界收口：`src/engine3d/` 通用渲染引擎抽取（EngineCanvas/Model/textureCache/EnvBinder/quality/controls）/ 相机俯仰角 1.2→1.54 解锁 / 街景漫游 WalkControls 双视角模式；方案 `tmpPlan/虚拟城市-2.5D升级3D世界与引擎模块化方案-20260925.md` | frontend-dev |
 | 34 | [`23-房间聊天删除与3D语音气泡/`](23-房间聊天删除与3D语音气泡/) | **23 批次（2026-09-25）** 房间聊天彻底删除（前端面板 + 后端人类发言 35104 拦截）+ Agent 居民发言 3D 冒泡：座位 speak → 头顶气泡（AgentToken `<Html>`），市民之声 → 市政厅上空气泡 | backend-dev、frontend-dev |
 | 35 | [`24-真实马路与交通设施/`](24-真实马路与交通设施/) | **24 批次（2026-09-26）** 真实马路升级：程序化沥青/GB 标线贴图（中心黄虚线+白边线烘焙入路面）+ 双端斑马线/半幅停止线/直行箭头 + 全城实例化红绿灯相位动画（16s 绿黄红）+ Blender 分类垃圾桶 GLB 路侧布设 + 人行道砖纹 | art-designer、frontend-dev |
+| 36 | [`25-居民Agent统一与LLM调用节流/`](25-居民Agent统一与LLM调用节流/) | **25 批次（2026-09-26）** 建房三项优化：① 居民-Agent 统一（`resident_count=N` ⇒ N 个 `LsmAgentGame-City-Human` 常驻 Agent，删 12 座强制覆盖与 PerMonth 线路数放大）② LLM 调用节流（每 Agent 令牌桶 1–2 次/分、月节拍回归 `month_ms`、wake 去重、修 appendMessages 双重追加）③ 城市时钟（现实 1 分 = 城市 1 小时 60× 叙事层，`city_clock_ms` 协议字段 + HUD） | backend-dev、frontend-dev、integration-tester |
 
 **配套事实来源**（本目录不重复、只引用）：
 
