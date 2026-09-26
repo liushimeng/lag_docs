@@ -48,6 +48,7 @@
 | 32 | （无文档目录，纯代码批次） | **21 批次（索引补登，2026-09-24）** `wealth` → `virtualCity` 全栈重命名：后端 kind/package/type、前端 URL/组件/i18n 命名空间、AutoTestAndDebug 入口改名 VirtualCity | backend-dev、frontend-dev |
 | 33 | [`22-3D世界升级与引擎模块化/`](22-3D世界升级与引擎模块化/) | **22 批次（2026-09-25）** 2.5D → 3D 世界收口：`src/engine3d/` 通用渲染引擎抽取（EngineCanvas/Model/textureCache/EnvBinder/quality/controls）/ 相机俯仰角 1.2→1.54 解锁 / 街景漫游 WalkControls 双视角模式；方案 `tmpPlan/虚拟城市-2.5D升级3D世界与引擎模块化方案-20260925.md` | frontend-dev |
 | 34 | [`23-房间聊天删除与3D语音气泡/`](23-房间聊天删除与3D语音气泡/) | **23 批次（2026-09-25）** 房间聊天彻底删除（前端面板 + 后端人类发言 35104 拦截）+ Agent 居民发言 3D 冒泡：座位 speak → 头顶气泡（AgentToken `<Html>`），市民之声 → 市政厅上空气泡 | backend-dev、frontend-dev |
+| 35 | [`24-真实马路与交通设施/`](24-真实马路与交通设施/) | **24 批次（2026-09-26）** 真实马路升级：程序化沥青/GB 标线贴图（中心黄虚线+白边线烘焙入路面）+ 双端斑马线/半幅停止线/直行箭头 + 全城实例化红绿灯相位动画（16s 绿黄红）+ Blender 分类垃圾桶 GLB 路侧布设 + 人行道砖纹 | art-designer、frontend-dev |
 
 **配套事实来源**（本目录不重复、只引用）：
 
