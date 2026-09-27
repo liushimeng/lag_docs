@@ -52,6 +52,7 @@
 | 36 | [`25-居民Agent统一与LLM调用节流/`](25-居民Agent统一与LLM调用节流/) | **25 批次（2026-09-26）** 建房三项优化：① 居民-Agent 统一（`resident_count=N` ⇒ N 个 `LsmAgentGame-City-Human` 常驻 Agent，删 12 座强制覆盖与 PerMonth 线路数放大）② LLM 调用节流（每 Agent 令牌桶 1–2 次/分、月节拍回归 `month_ms`、wake 去重、修 appendMessages 双重追加）③ 城市时钟（现实 1 分 = 城市 1 小时 60× 叙事层，`city_clock_ms` 协议字段 + HUD） | backend-dev、frontend-dev、integration-tester |
 | 37 | [`26-坐标系统与城市边缘环境/`](26-坐标系统与城市边缘环境/) | **26 批次（2026-09-26，索引补登 2026-09-27）** 城市中心 (0,0) 权威化 + 罗盘契约（北=−Z）+ 四缘环境带（北雪山 / 西沙漠 / 东森林 / 南海洋+南港+船运）：6 个新 GLB（雪山/针叶/仙人掌/灯塔/货船/帆船）+ 4 张地表贴图 + `edge/` 7 组件，纯前端/美术批次 | art-designer、frontend-dev |
 | 38 | [`27-时间比例与昼夜季节天气/`](27-时间比例与昼夜季节天气/) | **27 批次（2026-09-27）** 时间比例取代模拟月节拍（`time_ratio` 13 档 1分钟比1小时…1年，默认 1min:1h；月节拍推导 clamp [3000,60000]）+ 城市时钟倍率可变（批次 25 常数 60 → `time_ratio`）+ 季节/天气服务端确定性模型（`game.state` 新 4 字段 + 月结天气播报 + 居民感知）+ 3D 昼夜轮替/季节贴图/雨雪粒子（engine3d 新增 DayNightCycle/WeatherFX）+ 美术：四季草地贴图与橡树季节变体 GLB | backend-dev、frontend-dev、art-designer |
+| 39 | [`28-3D性能优化与物件信息交互/`](28-3D性能优化与物件信息交互/) | **28 批次（2026-09-27）** 3D 性能优化 + 全物件信息交互：① 消灭 4Hz 全树 re-render（memo 化 + 定时器外移）② 楼栋 DC 收敛（BoxFaces 6 组材质→2 组 + mergeBoxes，目标默认视角 draw call ≤ 1500）③ 阴影 15Hz 节流 + 树冠/车辆 caster 裁剪 ④ 行人路径预计算/小地图 10Hz/材质 prop 稳定化 ⑤ quality 分档扩容 + FPS HUD；并新建 `objectInfo/` 物件信息注册表（三语简介 catalog + 单例悬浮卡/详情卡），全场景 50+ 组件 100% 支持 hover/click 显示简介，供后期按信息裁剪模型 | frontend-dev、integration-tester |
 
 **配套事实来源**（本目录不重复、只引用）：
 
