@@ -55,6 +55,8 @@
 | 39 | [`28-3D性能优化与物件信息交互/`](28-3D性能优化与物件信息交互/) | **28 批次（2026-09-27）** 3D 性能优化 + 全物件信息交互：① 消灭 4Hz 全树 re-render（memo 化 + 定时器外移）② 楼栋 DC 收敛（BoxFaces 6 组材质→2 组 + mergeBoxes，目标默认视角 draw call ≤ 1500）③ 阴影 15Hz 节流 + 树冠/车辆 caster 裁剪 ④ 行人路径预计算/小地图 10Hz/材质 prop 稳定化 ⑤ quality 分档扩容 + FPS HUD；并新建 `objectInfo/` 物件信息注册表（三语简介 catalog + 单例悬浮卡/详情卡），全场景 50+ 组件 100% 支持 hover/click 显示简介，供后期按信息裁剪模型 | frontend-dev、integration-tester |
 | 40 | [`29-统一度量衡/`](29-统一度量衡/) | **29 批次（2026-09-27）** 3D 资产统一度量衡与轴向收口：批次 19 遗留的 12 个 GLB 按「世界单位 + Blender Z-up 原生授权 + minY=0」重导出（侧躺/玩具尺度/中心 pivot 三项债务结案，偏差全 0.00%）+ `cityScale.REAL_DIMS_M` 升为尺寸唯一事实来源（`worldDims()`/`sizeTargetFor()`）+ 两个自动护栏（`3d_script/verify_glb_aabb.py` 资产侧 22/22 PASS、`engine3d/glbSizeGuard` 消费侧 dev 断言）+ 不变量「GLB ≡ 程序化 fallback」；用户主诉（垃圾桶比车大 / 行人横躺 8.6 m / 车辆半埋）消除；遗留 L-C1（车辆正朝向 +Z 未落地）见其 §5 | art-designer、frontend-dev、integration-tester |
 
+| 41 | [`30-3D比例与昼夜季节收口/`](30-3D比例与昼夜季节收口/) | **30 批次（2026-09-28）** 用户主诉「垃圾桶/汽车/街道/路灯/建筑比例要符合真实世界 + 要有昼夜与季节」的收口：① 度量衡二次清账——修掉一批「世界单位当米用」裸字面量（水塔梯横档悬 20~70 m、路灯杆 ⌀1.0 m/奶白 1.6 m 方块头、城内树 1.7~4.4 m 棒棒糖→9 m 五球冠、车轮不分车型且外凸 +14%、漫游 108 km/h、行人陷地 15~35 cm、信号灯头 2.6×、箭头/斑马线/路缘超量级），新增 `REAL_SPACING_M` 间距表与 `DISTRICT_SURFACE_Y` 落地口径，表键 +`streetTree`/`trafficSignalPole`；② 城市肌理——每区 4–6→8–14 栋街墙布局（`building_layout`）+ `DistrictBuildings` 区级合并（draw call 2397→~1650），地块 50 cm 黑框改 15 cm 浅色路缘；③ 昼夜季节——`engine3d/DayNightSky` 自写渐变天穹（夜空亮度 229→≤25 实测）+ 曝光/IBL 随昼夜 + 窗灯/车灯接线（§130）+ 季节暖度入天穹；④ 护栏——`verify_glb_aabb.py` 判据 12→18 件 + `--emit-json`/`--check-table`、新增 `scripts/ci/crosscheck_glb_dims.py` 钉死「表值↔资产真值」、恢复被误删的 §4 行数脚本并把 §27.3 两护栏接进 CI；死文件清理 7 个 | frontend-dev、art-designer、integration-tester |
+
 **配套事实来源**（本目录不重复、只引用）：
 
 | 主题 | 来源 |
