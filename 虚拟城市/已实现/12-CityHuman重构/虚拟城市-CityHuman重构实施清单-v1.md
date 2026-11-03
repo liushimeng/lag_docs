@@ -12,11 +12,11 @@
 
 | 文件 | 改动 | 验收 |
 |---|---|---|
-| `agent/class_names.go` | 新增 `AgentClassCityHuman = "LsmAgentGame-City-Human"`；删除 CityPlayer/CityVoice/CityGovernment/CityBanker/CityFirm 五常量；`AllAgentClassNames()` 同步 | `go build` 通过；旧常量 grep 零命中 |
+| `agent/class_names.go` | 新增 `AgentClassCityHuman = "LsmAgentGame-City-Human"`；删除 5 个旧 AgentClass 常量；`AllAgentClassNames()` 同步 | `go build` 通过；旧常量 grep 零命中 |
 | `agent/class_names_test.go` | 断言 CityHuman 值；删除旧五常量断言 | `go test ./agent/` 通过 |
 | `agent/wealthplayer/agent.go`、`run.go`、`run_llm.go` | `LLMRequest.AgentClassName` 填 `AgentClassCityHuman` | 单测断言 `!= ""` 且 == CityHuman |
 | `game/wealth/city/voice.go` | 发声请求的 AgentClassName 改为 `AgentClassCityHuman`（注释同步） | `city_test.go` 通过 |
-| `agent/wealthtypes/context.go` | `GameContext.AgentClass` 注释/默认值改 City-Human | grep `City-Player` 零命中 |
+| `agent/wealthtypes/context.go` | `GameContext.AgentClass` 注释/默认值改 City-Human | 旧 AgentClass 零命中 |
 
 ### 1.2 感知与行动工具（核心新增）
 

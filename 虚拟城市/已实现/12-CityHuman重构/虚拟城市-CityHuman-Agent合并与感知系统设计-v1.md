@@ -12,10 +12,10 @@
 虚拟城市自 2026-09-22 起定位为**全 Agent 真实城市模拟器**：没有玩家、没有胜负，
 城市由全体居民 Agent 的行为涌现。原架构沿用了「财商流游戏」时期的双层 Agent 设计：
 
-| 层 | 旧 AgentClassName | 职责 |
+| 层 | 旧 AgentClass 划分 | 职责 |
 |---|---|---|
-| 焦点层（12 座） | `LsmAgentGame-City-Player` | LLM 每月决策、40 个工具循环 |
-| 背景层（1~10 万） | `LsmAgentGame-City-Voice` | 无工具、抽样极短发声 |
+| 焦点层（12 座） | 独立 AgentClass（焦点层） | LLM 每月决策、40 个工具循环 |
+| 背景层（1~10 万） | 独立 AgentClass（背景层） | 无工具、抽样极短发声 |
 | 规划常量（零消费方） | `LsmAgentGame-City-Government` / `-Banker` / `-Firm` | 政府/央行/企业公告 |
 
 这套命名仍带着「Player（玩家）」的游戏语义，且五个 AgentClass 割裂了「城市居民」这一统一身份。
@@ -38,7 +38,7 @@
   AgentClassCityHuman = "LsmAgentGame-City-Human"
   ```
 
-- 删除常量：`AgentClassCityPlayer`、`AgentClassCityVoice`、`AgentClassCityGovernment`、
+- 删除常量：焦点层与背景层两个旧 AgentClass 常量，以及 `AgentClassCityGovernment`、
   `AgentClassCityBanker`、`AgentClassCityFirm`（后三者本就零消费方，属「声明了却从不接线」，
   按 §130 教训直接移除；未来政府/央行/企业公告若接入 LLM，一律复用 `City-Human` + 角色提示词区分，
   不再新增 AgentClass）。
@@ -234,7 +234,9 @@ type SenseResult struct {
 
 ## 8. 验收标准
 
-1. `grep -rn "LsmAgentGame-City-Player\|LsmAgentGame-City-Voice\|LsmAgentGame-City-Government\|LsmAgentGame-City-Banker\|LsmAgentGame-City-Firm" ServerGo/` 零命中（历史文档除外）。
+1. 旧 AgentClass 常量（焦点层 / 背景层 / 政府 / 央行 / 企业）在 `ServerGo/` 全部零命中
+   （`agent/class_names.go` 的 `AgentClassCity*` 仅剩 `AgentClassCityHuman` 与
+   `AgentClassCityChrome`）。
 2. `grep -rn "LsmAgentGame-City-Human" ServerGo/` ≥ 5 处（常量登记 + 焦点层 + 背景层 + 测试断言 + 注释）。
 3. `go build` + `go test ./...` 全绿；新增单测覆盖：5 个新工具派发、感知限次、
    move 三模式计费、私聊定向可见性、Ambiance 事件叠加。
